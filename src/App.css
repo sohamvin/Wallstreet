@@ -1,0 +1,88 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+
+/* src/App.css */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centers cards horizontally */
+  gap: 16px; /* Space between cards */
+  padding: 20px; /* Padding around the container */
+}
+
+.card {
+  flex-basis: calc(25% - 32px); /* Adjusts width for four cards per row with gap */
+  box-sizing: border-box; /* Ensures padding is included in width */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card {
+      flex-basis: calc(50% - 32px); /* Two cards per row on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+      flex-basis: calc(100% - 32px); /* One card per row on very small screens */
+  }
+}
+
+
+/* src/App.css */
+
+/* src/App.css */
+
+h1 {
+  font-size: 2.5rem; /* Larger font size */
+  color: #333; /* Dark color for better contrast */
+  margin: 80px 0 20px; /* Add top margin to create space below the fixed navbar */
+  text-align: center; /* Center the text */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 10px; /* Padding for better spacing */
+  background-color: rgba(255, 255, 255, 0.8); /* Light background to make it stand out */
+  border-radius: 8px; /* Rounded corners */
+}
+
