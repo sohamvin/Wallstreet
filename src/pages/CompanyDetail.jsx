@@ -3,18 +3,18 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import StockChart from '../components/StockChart'; // Import the StockChart component
-import { io } from 'socket.io-client'; // Import Socket.IO client
+// import { io } from 'socket.io-client'; // Import Socket.IO client
 
 const CompanyDetail = ({ companies }) => {
     const { id } = useParams(); // Get the ID from the URL
     const company = companies[id]; // Get the company details based on ID
     const [chartData, setChartData] = useState([]); // State to hold formatted data
-
+    const API = "http://localhost:3000"
     // Fetch initial data from the API when the component mounts
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/data');
+                const response = await fetch(`${API}/api/data`);
                 const data = await response.json();
 
                 // Format the data into the required structure

@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
-
 const StockChart = ({ data }) => {
     const [chartData, setChartData] = useState([]);
+    const API = "http://localhost:3000"
 
     // Format initial data when component mounts
     useEffect(() => {
@@ -21,7 +21,7 @@ const StockChart = ({ data }) => {
 
     // Set up Socket.IO connection and listener for new values
     useEffect(() => {
-        const socket = io('http://localhost:3500'); // Connect to Socket.IO server
+        const socket = io(`${API}`); // Connect to Socket.IO server
 
         socket.on('newValue', (message) => {
             const parsedItem = typeof message === 'string' ? JSON.parse(message) : message;
