@@ -2,9 +2,13 @@ import PropTypes from 'prop-types';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
+import {
+    ROOT_URL
+} from "../APIS.js"
+
 const StockChart = ({ data }) => {
     const [chartData, setChartData] = useState([]);
-    const API = "http://localhost:3000"
+    const API = ROOT_URL
 
     // Format initial data when component mounts
     useEffect(() => {
@@ -38,7 +42,7 @@ const StockChart = ({ data }) => {
         return () => {
             socket.disconnect(); // Clean up on unmount
         };
-    }, []); // Empty dependency array means this runs once when component mounts
+    }, [chartData]); // Empty dependency array means this runs once when component mounts
 
     // Calculate max and min prices dynamically based on chartData
     const prices = chartData.map(item => item.price);
