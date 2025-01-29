@@ -1,68 +1,70 @@
-// src/pages/CompanyDetail.jsx
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import StockChart from '../components/StockChart'; // Import the StockChart component
-// import { io } from 'socket.io-client'; // Import Socket.IO client
-import {
-    ROOT_URL
-} from "../APIS.js"
+import LineChart from "../components/StockChart.jsx";
+import { stockService } from '../services/axioapis.js';
 
 const CompanyDetail = ({ companies }) => {
-    const { id } = useParams(); // Get the ID from the URL
-    const company = companies[id]; // Get the company details based on ID
-    const [chartData, setChartData] = useState([]); // State to hold formatted data
-    const API = ROOT_URL
-    // Fetch initial data from the API when the component mounts
+    const { id } = useParams(); // Get the id from the URL
+    const company = companies[id]; // Find the company using the id
+    
+    const [chartData, setChartData] = useState(null);
+
+    // Fetch data from the stockService API
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${API}/api/data`);
-                const data = await response.json();
-
-                // Format the data into the required structure
-
-                setChartData(data); // Update state with formatted data
+                const data = await stockService.getHistoricalData(company.name); // Use company name as identifier
+    
+                // Prepare the chartData object
+                const labels = data.map(item => item.timestamp); // Extract timestamps for labels
+                const prices = data.map(item => parseFloat(item.price)); // Parse the price values to numbers
+    
+                const formattedChartData = {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Price',
+                            data: prices,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            fill: true,
+                            tension: 0.4,
+                        },
+                    ],
+                };
+    
+                setChartData(formattedChartData); // Update the chart data state
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
 
         fetchData();
-    }, []); // Empty dependency array means this runs once when component mounts
-
-    // Set up Socket.IO connection and listener for new values
-    // useEffect(() => {
-    //     const socket = io('http://localhost:3500'); // Connect to Socket.IO server
-
-    //     socket.on('newValue', (message) => {
-    //         const parsedItem = JSON.parse(message); // Parse incoming JSON string
-
-    //         // Format the new data point
-    //         const newDataPoint = {
-    //             time: parsedItem.date.split('T')[1], // Extract time part
-    //             price: parseFloat(parsedItem.num), // Convert price to float
-    //         };
-
-    //         setChartData(prevData => [...prevData, newDataPoint]); // Update chart data with new point
-    //     });
-
-    //     return () => {
-    //         socket.disconnect(); // Clean up on unmount
-    //     };
-    // }, []); // Empty dependency array means this runs once when component mounts
+    }, [company]); // Re-run when the company changes
+    
+    if (!chartData) {
+        return <div>Loading chart data...</div>;
+    }
 
     return (
-        <div style={{ paddingTop: '80px', textAlign: 'center' }}>
-            <h2>{company.name}</h2>
-            <img src={company.imageUrl} alt={`${company.name} logo`} style={{ width: '200px', height: 'auto' }} />
-            <p>{`Stock Value: $${company.stockValue}`}</p>
-            <StockChart data={chartData} /> {/* Render the StockChart component with fetched data */}
+        <div style={{ padding: '40px 20px', textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>{company.name}</h2>
+            <img 
+                src={company.imageUrl} 
+                alt={`${company.name} logo`} 
+                style={{ width: '250px', height: 'auto', marginBottom: '20px' }} 
+            />
+            <p style={{ fontSize: '1.5rem', marginBottom: '40px' }}>
+                {`Stock Value: $${company.stockValue}`}
+            </p>
+            <div style={{ height: '400px', width: '100%' }}>
+                <LineChart chartData={chartData} />
+            </div>
         </div>
     );
 };
 
-// PropTypes validation
 CompanyDetail.propTypes = {
     companies: PropTypes.arrayOf(
         PropTypes.shape({

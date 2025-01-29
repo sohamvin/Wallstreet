@@ -1,19 +1,21 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%; /* Allow root container to take full width */
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 15vw; /* Set height as a percentage of the viewport width */
+  padding: 2vw; /* Adjust padding based on width */
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -34,55 +36,60 @@
 }
 
 .card {
-  padding: 2em;
+  padding: 4vw; /* Adjust padding to be responsive */
+  box-sizing: border-box;
+  width: 90%; /* Take up 90% of parent width */
+  max-width: 30rem; /* Maximum width for larger screens */
 }
 
-.read-the-docs {
-  color: #888;
-}
-
-
-
-/* src/App.css */
+/* Responsive adjustments for card-container */
 .card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center; /* Centers cards horizontally */
-  gap: 16px; /* Space between cards */
-  padding: 20px; /* Padding around the container */
+  gap: 4vw; /* Space between cards, in percentage */
+  padding: 5vw; /* Padding based on viewport width */
 }
 
 .card {
-  flex-basis: calc(25% - 32px); /* Adjusts width for four cards per row with gap */
-  box-sizing: border-box; /* Ensures padding is included in width */
+  flex-basis: calc(33.33% - 4vw); /* Three cards per row on larger screens */
+  max-width: 30rem; /* Restrict the maximum width */
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
   .card {
-      flex-basis: calc(50% - 32px); /* Two cards per row on smaller screens */
+    flex-basis: calc(50% - 4vw); /* Two cards per row on smaller screens */
   }
 }
 
 @media (max-width: 480px) {
   .card {
-      flex-basis: calc(100% - 32px); /* One card per row on very small screens */
+    flex-basis: 100%; /* One card per row on very small screens */
   }
 }
 
-
-/* src/App.css */
-
-/* src/App.css */
-
 h1 {
-  font-size: 2.5rem; /* Larger font size */
-  color: #333; /* Dark color for better contrast */
-  margin: 80px 0 20px; /* Add top margin to create space below the fixed navbar */
-  text-align: center; /* Center the text */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  padding: 10px; /* Padding for better spacing */
-  background-color: rgba(255, 255, 255, 0.8); /* Light background to make it stand out */
-  border-radius: 8px; /* Rounded corners */
+  font-size: 5vw; /* Font size relative to viewport width */
+  color: #333;
+  margin: 10vw 0 4vw; /* Margin to adjust based on viewport size */
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 2vw;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 2vw; /* Rounded corners with a percentage-based value */
 }
 
+.chart-container {
+  margin-bottom: 20vw; /* Adjust the bottom margin as percentage of viewport width */
+  width: 90%; /* Chart container takes up 90% of the width */
+  max-width: 100%; /* Prevent chart from exceeding parent width */
+  margin-left: auto; /* Center it horizontally */
+  margin-right: auto;
+}
+
+/* Ensure responsive chart aspect ratio */
+.chart-container > canvas {
+  width: 100% !important; /* Ensure the chart takes full container width */
+  height: auto !important; /* Maintain aspect ratio */
+}
