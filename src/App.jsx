@@ -38,7 +38,7 @@ function App() {
     return (
         <Router>
             <Navbar />
-            <h1>Welcome to My App!</h1>
+            <h1>WallStreet!</h1>
             <div className="card-container">
                 <Routes>
                     <Route 
@@ -50,7 +50,7 @@ function App() {
                                     companyName={company.name} 
                                     stockValue={company.stockValue} 
                                     imageUrl={company.imageUrl} 
-                                    onClick={() => window.location.href=`/company/${index}`} // Navigate to detail page
+                                    onClick={() => window.location.href=`/company/${company.name}`} // Navigate to detail page
                                 />
                             ))
                         } 

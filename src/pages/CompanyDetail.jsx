@@ -1,65 +1,39 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import LineChart from "../components/StockChart.jsx";
-import { stockService } from '../services/axioapis.js';
+import PropTypes from 'prop-types';
+import ApexChart from "../components/StockChart.jsx";
+import MarketInfoCard from '../components/MarketInfoCard.jsx';
 
 const CompanyDetail = ({ companies }) => {
     const { id } = useParams(); // Get the id from the URL
-    const company = companies[id]; // Find the company using the id
-    
-    const [chartData, setChartData] = useState(null);
+    // const company = companies[id]; // Find the company using the id
 
-    // Fetch data from the stockService API
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await stockService.getHistoricalData(company.name); // Use company name as identifier
-    
-                // Prepare the chartData object
-                const labels = data.map(item => item.timestamp); // Extract timestamps for labels
-                const prices = data.map(item => parseFloat(item.price)); // Parse the price values to numbers
-    
-                const formattedChartData = {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Price',
-                            data: prices,
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            fill: true,
-                            tension: 0.4,
-                        },
-                    ],
-                };
-    
-                setChartData(formattedChartData); // Update the chart data state
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+    const company = companies.find(company => company.name === id); // Find the company using the name
 
-        fetchData();
-    }, [company]); // Re-run when the company changes
-    
-    if (!chartData) {
-        return <div>Loading chart data...</div>;
+
+    if (!company) {
+        return <div>Company not found</div>;
     }
 
+    
     return (
         <div style={{ padding: '40px 20px', textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
+            {/* Real-time Market Data */}
+            <MarketInfoCard company={company.name} />
+
+            {/* Company Information */}
             <h2 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>{company.name}</h2>
             <img 
                 src={company.imageUrl} 
                 alt={`${company.name} logo`} 
-                style={{ width: '250px', height: 'auto', marginBottom: '20px' }} 
+                style={{ width: '20%', height: 'auto', marginBottom: '20px' }} 
             />
             <p style={{ fontSize: '1.5rem', marginBottom: '40px' }}>
                 {`Stock Value: $${company.stockValue}`}
             </p>
-            <div style={{ height: '400px', width: '100%' }}>
-                <LineChart chartData={chartData} />
+
+            {/* Chart Component */}
+            <div >
+                <ApexChart companyName={company.name} />
             </div>
         </div>
     );

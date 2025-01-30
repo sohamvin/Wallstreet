@@ -1,95 +1,117 @@
-#root {
-  max-width: 100%; /* Allow root container to take full width */
-  margin: 0 auto;
-  padding: 2rem;
+/* App.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
   text-align: center;
-}
-
-.logo {
-  height: 15vw; /* Set height as a percentage of the viewport width */
-  padding: 2vw; /* Adjust padding based on width */
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 4vw; /* Adjust padding to be responsive */
-  box-sizing: border-box;
-  width: 90%; /* Take up 90% of parent width */
-  max-width: 30rem; /* Maximum width for larger screens */
-}
-
-/* Responsive adjustments for card-container */
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* Centers cards horizontally */
-  gap: 4vw; /* Space between cards, in percentage */
-  padding: 5vw; /* Padding based on viewport width */
-}
-
-.card {
-  flex-basis: calc(33.33% - 4vw); /* Three cards per row on larger screens */
-  max-width: 30rem; /* Restrict the maximum width */
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-  .card {
-    flex-basis: calc(50% - 4vw); /* Two cards per row on smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .card {
-    flex-basis: 100%; /* One card per row on very small screens */
-  }
 }
 
 h1 {
-  font-size: 5vw; /* Font size relative to viewport width */
   color: #333;
-  margin: 10vw 0 4vw; /* Margin to adjust based on viewport size */
-  text-align: center;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  padding: 2vw;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 2vw; /* Rounded corners with a percentage-based value */
 }
 
-.chart-container {
-  margin-bottom: 20vw; /* Adjust the bottom margin as percentage of viewport width */
-  width: 90%; /* Chart container takes up 90% of the width */
-  max-width: 100%; /* Prevent chart from exceeding parent width */
-  margin-left: auto; /* Center it horizontally */
-  margin-right: auto;
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
 }
 
-/* Ensure responsive chart aspect ratio */
-.chart-container > canvas {
-  width: 100% !important; /* Ensure the chart takes full container width */
-  height: auto !important; /* Maintain aspect ratio */
+/* Card.css */
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  width: 250px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-stock-value {
+  font-weight: bold;
+  color: #444;
+}
+
+/* Navbar.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 15px 20px;
+  color: white;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-toggle {
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: none;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-links li {
+  display: inline;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+  color: #f4b400;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-toggle {
+      display: block;
+  }
+
+  .navbar-links {
+      display: none;
+      flex-direction: column;
+      background-color: #333;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+  }
+
+  .navbar-links.active {
+      display: flex;
+  }
 }
